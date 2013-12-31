@@ -1,0 +1,98 @@
+/*PROMO*/
+body{text-align:center;}
+#promo{text-align:left;height:440px;width:960px;margin:0 auto;margin-top:20px;}
+
+#jqRoll {background:url(images/select-item.jpg) 50% 0px no-repeat;
+    padding-top: 15px;}
+
+
+#showcaseInfoBox img{border:none;width:420px;height:285px;}
+#showcaseInfoBox {height:285px;width:930px;position:relative;padding:15px;}
+#showcaseInfoBox .infoBoxPhoto{float:left;display:block;width:640px;height:285px;}
+#showcaseInfoBox .infoBoxDesc h2{float:right;width:275px;font:bold 24px arial;letter-spacing:0.03em;padding:0;margin:0;}
+#showcaseInfoBox .infoBoxDesc .text{float:right;width:275px;height:130px;}
+
+#selectItem{position:absolute;bottom:-101px;left:405px;clear:both;width:140px;height:100px;border-top:none;}
+
+#showcaseInfoBox .infoBoxItem{position:absolute;display:none;z-index:5;width:928px;height:300px;}
+#showcaseInfoBox .infoBoxItem.select{display:block;z-index:100;}
+
+
+/*main block*/
+#jqRoll img{border:none;width:70%;margin: 0 15%;}
+#jqRoll{
+	position:relative;
+	height:630px;
+	margin:0 auto;
+	width:960px;
+	z-index:3;
+}
+
+/*carousel outer*/
+.jqRollOuter{
+	position:relative;
+	height:120px;
+	width:918px;
+	margin:0 21px;
+	overflow:hidden;
+	z-index:2;
+}
+
+/*carousel inner*/
+.jqRollInner{
+	width:9999px;
+	position:absolute;
+	margin:0;
+	margin-top:10px;
+	padding:0;
+	z-index:1;
+}
+
+/*carousel item*/
+.jqRollInner li{
+	list-style:none;
+	display:block;
+	float:left;
+	width:185px;
+	height:120px;
+	margin-right:0px;
+	padding:0;
+	text-align:center;
+    border: 1px solid #000;
+} 
+
+/*item content*/
+.jqRollInner li div{
+	cursor:pointer;
+	position:relative;
+	cursor:hand;
+	width:185px;
+	margin-left:0px;
+	height:105px;
+    text-align:center;
+}
+.jqRollInner .select div{    
+	cursor:default;
+    background: red;
+}
+.jqRollInner li div img{
+    width:110px;
+}
+
+.jqRollInner li div b{font-size:12px;width:100%;text-align:center;position:absolute;bottom:0;left:0;font-weight:bold;text-transform:uppercase;padding-top:5px;color:#000;}
+
+/*navigation*/
+.jqRollNext,.jqRollPrev{
+	z-index:4;
+	cursor:pointer;
+	cursor:hand;
+	position:absolute;
+	height:85px;
+	padding-top:35px;
+	width:21px;
+	text-align:center;
+}
+.jqRollPrev{left:0;}
+.jqRollNext{right:0;}
+
+#jqRollSelectItem{position:absolute;bottom:-132px;border:1px solid #999;border-top:2px solid #fff;border-radius:0 0 10px 10px;border-width:2px 1px 1px 1px;width:150px;height:130px;left:50%;margin-left:-80px;}

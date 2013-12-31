@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="style/style.css" media="all">
+    <script type="text/javascript" src="../lib/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.carousel.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#jqRoll').carousel({
+                autoPlay:true,
+                midPoint:3
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <div id="jqRoll">
+
+        <div class="jqRollPrev"><<</div>
+        <div class="jqRollNext">>></div>
+        
+        <div class="jqRollOuter">
+            <ul class="jqRollInner">
+                <li data-rel="item1" class="select">
+                    <div>
+                        
+                        <b>Apple iPad</b>
+                    </div>
+                </li>
+                
+                <li data-rel="item2">
+                    <div>
+                        
+                        <b>Apple iPhone 5</b>
+                    </div>
+                </li>
+                
+                <li data-rel="item3">
+                    <div>
+                        
+                        <b>Samsung Galaxy S4</b>
+                    </div>
+                </li>
+                
+                <li data-rel="item4">
+                    <div>
+                        
+                        <b>Samsung Smart TV</b>
+                    </div>
+                </li>
+                
+                <li data-rel="item5">
+                    <div>
+                        
+                        <b>Sony VAIO Windows 8</b>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
