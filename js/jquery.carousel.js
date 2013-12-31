@@ -40,7 +40,7 @@
         }
 
         if (opt.itemWidth === false) {
-            opt.itemWidth = $('.jqRollInner>li:first', main).outerWidth();
+            opt.itemWidth = $('#jqRollInner>li:first', main).outerWidth();
         }
 
         if (opt.easing !== 'swing') {
@@ -53,14 +53,14 @@
          * @todo: возможно элементами сделать любых прямых детей
          * кол-во элементов
          */
-        n = $('.jqRollInner>li', main).size();
+        n = $('#jqRollInner>li', main).size();
 
 
         return this.each(function () {
             carousel.rewind();
             carousel.addItem();
 
-            $('.jqRollInner', main).on("click", 'li', function () {
+            $('#jqRollInner', main).on("click", 'li', function () {
 
                 if (clickOn === false) {
                     return false;
@@ -82,14 +82,14 @@
                 }
             });
 
-            $('.jqRollNext', main).click(function () {
+            $('#jqRollNext', main).click(function () {
                 if (clickOn === false) {
                     return false;
                 }
                 carousel.Roll('next');
             });
 
-            $('.jqRollPrev', main).click(function () {
+            $('#jqRollPrev', main).click(function () {
                 if (clickOn === false) {
                     return false;
                 }
@@ -110,7 +110,7 @@
         var run = setInterval(fwd, opt.playSpeed);
 
         function fwd() {
-            $('.jqRollNext', main).click();
+            $('#jqRollNext', main).click();
         }
 
         main.hover(function () {
@@ -125,8 +125,7 @@
      * First element to mid position
      */
     carousel.rewind = function () {
-        var selectItem = $('.jqRollInner .select', main);
-        var selectIndex = selectItem.index() + 1;
+        var selectIndex = $('#jqRollInner .select', main).index() + 1;
         var rewind = false;
         if (opt.midPoint !== false) {
             var shift = opt.midPoint - selectIndex;
@@ -136,15 +135,14 @@
             shift = Math.abs(shift);
             for (var i = 1; i <= shift; i++) {
                 if (rewind === true) {
-                    $('.jqRollInner li:last', main).after($('.jqRollInner li:first', main));
+                    $('#jqRollInner li:last', main).after($('#jqRollInner li:first', main));
                 } else {
-                    $('.jqRollInner li:first', main).before($('.jqRollInner li:last', main));
+                    $('#jqRollInner li:first', main).before($('#jqRollInner li:last', main));
                 }
             }
         } else {
             opt.midPoint = 0;
         }
-        return;
     };
 
     /**
@@ -153,24 +151,23 @@
     carousel.addItem = function () {
 
         for (var i = 0; i < opt.maxRoll; i++) {
-            $('.jqRollInner li:first', main)
-                .before($('.jqRollInner li', main).eq(n - 1)
+            $('#jqRollInner li:first', main)
+                .before($('#jqRollInner li', main).eq(n - 1)
                     .clone()
                     .removeClass('select'));
         }
 
         n2 = n + opt.maxRoll;
         for (var j = 0; j < opt.maxRoll; j++) {
-            $('.jqRollInner li:last', main)
-                .after($('.jqRollInner li', main).eq(n2 - n)
+            $('#jqRollInner li:last', main)
+                .after($('#jqRollInner li', main).eq(n2 - n)
                     .clone()
                     .removeClass('select'));
             n2++;
         }
 
         leftIndent = -1 * ( opt.maxRoll * opt.itemWidth );
-        $('.jqRollInner', main).css({'left': leftIndent + 'px'});
-        return;
+        $('#jqRollInner', main).css({'left': leftIndent + 'px'});
     };
 
     /**
@@ -181,52 +178,42 @@
      */
     carousel.Roll = function (stream) {
         clickOn = false;
-        var k;
+
+        var k = 1;
         if (stream === 'prev') {
             k = -1;
-        } else {
-            k = 1;
         }
-        var prevItem = $('.jqRollInner .select', main).removeClass('select');
-        var selectIndex = prevItem.index();
-        var nextItem = $('.jqRollInner li', main).eq(selectIndex + k * rollCount);
-        nextItem.addClass('select');
 
-        carousel.crossFadeInfo(prevItem, nextItem);
+        var prevItem = $('#jqRollInner .select', main).removeClass('select');
+        var selectIndex = prevItem.index();
+        var nextItem = $('#jqRollInner li', main).eq(selectIndex + k * rollCount).addClass('select');
 
         var offset = leftIndent - k * ( rollCount * opt.itemWidth );
-        $('.jqRollInner', main).animate({'left': offset}, {
+        $('#jqRollInner', main).animate({'left': offset}, {
             duration: rollSpeed,
             easing: opt.easing,
             complete: function () {
                 if (stream === 'prev') {
                     for (var i = 0; i < rollCount; i++) {
-                        $('.jqRollInner li:first', main).before($('.jqRollInner li', main).eq(n - 1).clone());
-                        $('.jqRollInner li:last', main).remove();
+                        $('#jqRollInner li:first', main)
+                            .before($('#jqRollInner li', main).eq(n - 1).clone());
+
+                        $('#jqRollInner li:last', main).remove();
                     }
                 } else {
                     for (var j = 0; j < rollCount; j++) {
-                        $('.jqRollInner li:last', main).after($('.jqRollInner li', main).eq(n2 - n).clone());
-                        $('.jqRollInner li:first', main).remove();
+                        $('#jqRollInner li:last', main)
+                            .after($('#jqRollInner li', main).eq(n2 - n).clone());
+
+                        $('#jqRollInner li:first', main).remove();
                     }
                 }
-                $('.jqRollInner', main).css({'left': leftIndent + 'px'});
+                $('#jqRollInner', main).css({'left': leftIndent + 'px'});
                 rollCount = opt.navRoll;
                 clickOn = true;
                 rollSpeed = opt.defSpeed;
             }
         });
-        return;
-    };
-
-    carousel.crossFadeInfo = function (prevItem, nextItem) {
-        var prevId = prevItem.attr('data-rel');
-        var prevInfo = $('#' + prevId);
-        var nextId = nextItem.attr('data-rel');
-        var nextInfo = $('#' + nextId);
-        var fadeSpeed = parseInt(rollSpeed * 1.5);
-        prevInfo.fadeOut(fadeSpeed);
-        nextInfo.fadeIn(fadeSpeed);
         return;
     };
 

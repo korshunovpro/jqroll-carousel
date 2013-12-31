@@ -29,7 +29,7 @@ body{text-align:center;}
 }
 
 /*carousel outer*/
-.jqRollOuter{
+#jqRollOuter{
 	position:relative;
 	height:120px;
 	width:918px;
@@ -39,7 +39,7 @@ body{text-align:center;}
 }
 
 /*carousel inner*/
-.jqRollInner{
+#jqRollInner{
 	width:9999px;
 	position:absolute;
 	margin:0;
@@ -49,7 +49,7 @@ body{text-align:center;}
 }
 
 /*carousel item*/
-.jqRollInner li{
+#jqRollInner li{
 	list-style:none;
 	display:block;
 	float:left;
@@ -62,7 +62,7 @@ body{text-align:center;}
 } 
 
 /*item content*/
-.jqRollInner li div{
+#jqRollInner li div{
 	cursor:pointer;
 	position:relative;
 	cursor:hand;
@@ -71,18 +71,18 @@ body{text-align:center;}
 	height:105px;
     text-align:center;
 }
-.jqRollInner .select div{    
+#jqRollInner .select div{    
 	cursor:default;
     background: red;
 }
-.jqRollInner li div img{
+#jqRollInner li div img{
     width:110px;
 }
 
-.jqRollInner li div b{font-size:12px;width:100%;text-align:center;position:absolute;bottom:0;left:0;font-weight:bold;text-transform:uppercase;padding-top:5px;color:#000;}
+#jqRollInner li div b{font-size:12px;width:100%;text-align:center;position:absolute;bottom:0;left:0;font-weight:bold;text-transform:uppercase;padding-top:5px;color:#000;}
 
 /*navigation*/
-.jqRollNext,.jqRollPrev{
+#jqRollNext,#jqRollPrev{
 	z-index:4;
 	cursor:pointer;
 	cursor:hand;
@@ -92,7 +92,7 @@ body{text-align:center;}
 	width:21px;
 	text-align:center;
 }
-.jqRollPrev{left:0;}
-.jqRollNext{right:0;}
+#jqRollPrev{left:0;}
+#jqRollNext{right:0;}
 
 #jqRollSelectItem{position:absolute;bottom:-132px;border:1px solid #999;border-top:2px solid #fff;border-radius:0 0 10px 10px;border-width:2px 1px 1px 1px;width:150px;height:130px;left:50%;margin-left:-80px;}
