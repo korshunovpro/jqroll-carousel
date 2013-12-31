@@ -6,6 +6,7 @@
  *
  * @todo: генерация служебных оберток и стрелок
  * @todo: названия классов и id вынести в настройки
+ * @todo: доделать для ограниченной прокрутки, с проверкой наличие элементов
  *
  */
 (function ($) {
@@ -23,8 +24,9 @@
             navRoll:    1,
             defSpeed:   500,
             playSpeed:  4000,
-            autoPlay:   true
-    }, main, opt, n, n2, leftIndent, rollSpeed = false, rollCount = 1, clickOn = true, carousel;
+            autoPlay:   true,
+            rewind: true
+    }, main, opt, elemCount, elemCount2, leftIndent, rollSpeed = false, rollCount = 1, clickOff = true, carousel;
 
 
     /**
@@ -35,39 +37,33 @@
         main = this;
         opt = $.extend({}, defaults, settings);
 
-        if (rollSpeed === false) {
-            rollSpeed = opt.defSpeed;
-        }
+        // defaults opts check
+        rollSpeed = rollSpeed || opt.defSpeed;
+        opt.itemWidth = opt.itemWidth || $('#jqRollInner>li:first', main).outerWidth();
 
-        if (opt.itemWidth === false) {
-            opt.itemWidth = $('#jqRollInner>li:first', main).outerWidth();
-        }
-
-        if (opt.easing !== 'swing') {
-            if ((opt.easing in jQuery.easing) === false) {
-                opt.easing = 'swing';
-            }
+        if (opt.easing !== 'swing' && (opt.easing in jQuery.easing) === false ) {
+            opt.easing = 'swing';
         }
 
         /**
          * @todo: возможно элементами сделать любых прямых детей
          * кол-во элементов
          */
-        n = $('#jqRollInner>li', main).size();
+        elemCount = $('#jqRollInner>li', main).size();
 
 
         return this.each(function () {
-            carousel.rewind();
+
+            if(opt.rewind === true) {
+                carousel.rewind();
+            }
+
             carousel.addItem();
 
             $('#jqRollInner', main).on("click", 'li', function () {
 
-                if (clickOn === false) {
+                if (clickOff === false || $(this).hasClass('select')) {
                     return false;
-                }
-
-                if ($(this).hasClass('select')) {
-                    return;
                 }
 
                 var pos = $(this).index() - opt.maxRoll;
@@ -82,15 +78,15 @@
                 }
             });
 
-            $('#jqRollNext', main).click(function () {
-                if (clickOn === false) {
+            $(main).on('click', '#jqRollNext', function () {
+                if (clickOff === false) {
                     return false;
                 }
                 carousel.Roll('next');
             });
 
-            $('#jqRollPrev', main).click(function () {
-                if (clickOn === false) {
+            $(main).on('click', '#jqRollPrev', function () {
+                if (clickOff === false) {
                     return false;
                 }
                 carousel.Roll('prev');
@@ -127,11 +123,12 @@
     carousel.rewind = function () {
         var selectIndex = $('#jqRollInner .select', main).index() + 1;
         var rewind = false;
+
         if (opt.midPoint !== false) {
             var shift = opt.midPoint - selectIndex;
-            if (shift < 0) {
-                rewind = true;
-            }
+
+            rewind = ( shift < 0 );
+
             shift = Math.abs(shift);
             for (var i = 1; i <= shift; i++) {
                 if (rewind === true) {
@@ -152,18 +149,18 @@
 
         for (var i = 0; i < opt.maxRoll; i++) {
             $('#jqRollInner li:first', main)
-                .before($('#jqRollInner li', main).eq(n - 1)
+                .before($('#jqRollInner li', main).eq(elemCount - 1)
                     .clone()
                     .removeClass('select'));
         }
 
-        n2 = n + opt.maxRoll;
+        elemCount2 = elemCount + opt.maxRoll;
         for (var j = 0; j < opt.maxRoll; j++) {
             $('#jqRollInner li:last', main)
-                .after($('#jqRollInner li', main).eq(n2 - n)
+                .after($('#jqRollInner li', main).eq(elemCount2 - elemCount)
                     .clone()
                     .removeClass('select'));
-            n2++;
+           elemCount2++;
         }
 
         leftIndent = -1 * ( opt.maxRoll * opt.itemWidth );
@@ -177,7 +174,7 @@
      * @constructor
      */
     carousel.Roll = function (stream) {
-        clickOn = false;
+        clickOff = false;
 
         var k = 1;
         if (stream === 'prev') {
@@ -196,21 +193,23 @@
                 if (stream === 'prev') {
                     for (var i = 0; i < rollCount; i++) {
                         $('#jqRollInner li:first', main)
-                            .before($('#jqRollInner li', main).eq(n - 1).clone());
+                            .before($('#jqRollInner li', main).eq(elemCount - 1)
+                                .clone());
 
                         $('#jqRollInner li:last', main).remove();
                     }
                 } else {
                     for (var j = 0; j < rollCount; j++) {
                         $('#jqRollInner li:last', main)
-                            .after($('#jqRollInner li', main).eq(n2 - n).clone());
+                            .after($('#jqRollInner li', main).eq(elemCount2 - elemCount)
+                                .clone());
 
                         $('#jqRollInner li:first', main).remove();
                     }
                 }
                 $('#jqRollInner', main).css({'left': leftIndent + 'px'});
                 rollCount = opt.navRoll;
-                clickOn = true;
+                clickOff = true;
                 rollSpeed = opt.defSpeed;
             }
         });
