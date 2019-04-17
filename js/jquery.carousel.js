@@ -30,7 +30,7 @@
 
 
     /**
-     * Main
+     * Main loop
      * @type {carousel}
      */
     carousel = $.fn.carousel = function (settings) {
@@ -50,7 +50,6 @@
          * кол-во элементов
          */
         elemCount = $('#jqRollInner>li', main).size();
-
 
         return this.each(function () {
 
